@@ -1,0 +1,54 @@
+<div class="signin-wrapper flex flex-col full-w h-full items-center">
+  <mat-card class="flex flex-col lg:w-1/4 md:w-1/2 w-full p-4 md:top-60" color="accent">
+    <mat-card-header class="flex flex-col">
+      <mat-card-title class="py-4">Signup User</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if(successMessage) {
+        <!-- REF: Code used from https://v1.tailwindcss.com/components/alerts -->
+        <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
+          <div class="flex">
+            <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+            <div>
+              <p class="font-bold">Success</p>
+              <p class="text-sm">{{successMessage}}</p>
+            </div>
+          </div>
+        </div>
+      } @else {
+        <form [formGroup]="form" (submit)="onSubmit($event)" class="w-full flex flex-col gap-4" novalidate>
+          <mat-form-field>
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" placeholder="First name">
+            @if(submitted && form.get('firstName')?.hasError('required')) {
+              <mat-error>First name is required</mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" placeholder="Last name">
+            @if(submitted && form.get('lastName')?.hasError('required')) {
+              <mat-error>Last name is required</mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" placeholder="email">
+            @if(submitted && form.get('email')?.hasError('required')) {
+              <mat-error>email is required</mat-error>
+            }
+            @if(submitted && form.get('email')?.hasError('email')) {
+              <mat-error>Invalid email provided</mat-error>
+            }
+          </mat-form-field>
+          <!-- Additional Form Field go here -->
+          <div class="flex flex-row gap-4 w-full py-3">
+            <button type="submit" mat-raised-button color="primary">Submit</button>
+            <button type="reset" mat-raised-button>Reset</button>
+          </div>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
+
